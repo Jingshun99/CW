@@ -1,14 +1,10 @@
-
-
 <?php
     include_once 'demos/demo1.php';
     include 'cwindex.php';
 
-            
     if ($_GET['submit']=='INSERT'){ //if we pressed insert
 
         echo "<p> <font color=white>Enter information:";
-        //echo "<br>";
         //echo "<i>For inserting a text, please enclose text with quotation(' ')</i>";
         echo "<br>";
         echo "<br>";
@@ -18,7 +14,7 @@
 
         if(!empty($_GET["col"])){
             foreach($_GET["col"] as $col){
-                echo "<p> <font color=white>$col<input type = 'checkbox', value = '$col', name = 'col[]' checked> : <input type = 'text' name = 'inscol[]' id='datacol' class='data'>";
+                echo "$col<input type = 'hidden', value = '$col', name = 'col[]'> : <input type = 'text' name = 'inscol[]' id='datacol' class='data'>";
                 echo "<br>";
                 echo "<br>";
             }
@@ -27,7 +23,7 @@
 
         echo "</form>";
         echo "<br>";
-    echo "<table border='1' cellpadding='2' bordercolor='#c23616'>";
+    echo "<table border='1' cellpadding='2' bordercolor='#c23616' width = '100%'>";
     echo "<tr>";
     if(isset($_GET['submit'])){
         if(!empty($_GET["col"])){
@@ -45,7 +41,8 @@
                 foreach($_GET["col"] as $col){
                     echo "<td><p> <font color=white>".$row["$col"]."</td>";
                 }
-                echo "<td><input type = 'submit' value = 'UPDATE' id='update_btn' class= 'update'> <input type = 'submit' value = 'DELETE' id='delete_btn' class= 'delete'></td>";
+                //echo "<td><input type = 'submit' value = 'UPDATE'> <input type = 'submit' value = 'DELETE'></td>";
+                echo '<td align="center"><form action="delete1.php" method="get"> <input type="hidden" name="primKey" value='.$row["ID"].'> <input type="submit" name="delete" value="DELETE" id="delete_btn" class= "delete"> <input type="submit" name="update" value="UPDATE" id="update_btn" class= "update"></form></td>';
                 echo "</tr>";
             }
         }
@@ -57,8 +54,9 @@
     }
 
     else { //if we pressed select
+    echo "<b><ul><u>city</b></ul></u>";
     echo "<br>";
-    echo "<table border='1' cellpadding='2' bordercolor='#c23616'>";
+    echo "<table border='1' cellpadding='2' bordercolor='#c23616' width = '100%'>";
     echo "<tr>";
     if(isset($_GET['submit'])){
         if(!empty($_GET["col"])){
@@ -76,7 +74,12 @@
                 foreach($_GET["col"] as $col){
                     echo "<td><p> <font color=white>".$row["$col"]."</td>";
                 }
-                echo "<td><input type = 'submit' value = 'UPDATE' id='update_btn' class= 'update'> <input type = 'submit' value = 'DELETE' id='delete_btn' class= 'delete'></td>";
+                echo '<td align="center" ><form action="delete1.php" method="get">';
+                    foreach($_GET["col"] as $col){
+                        echo "<input type='hidden' value='$col' name='col[]'>";
+                    }
+                echo'<input type="hidden" name="primKey" value='.$row["ID"].'> <input type="submit" name="delete" value="DELETE" id="delete_btn" class= "delete">';
+                echo'<input type="submit" name="update" value="UPDATE" id="update_btn" class= "update"></form></td>'; 
                 echo "</tr>";
             }
         }

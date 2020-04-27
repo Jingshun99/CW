@@ -23,7 +23,7 @@
     }
 
     echo "<br>";
-    echo "<table border='1' cellpadding='2' bordercolor='#f0932b'>";
+    echo "<table border='1' cellpadding='2' bordercolor='#f0932b' width = '100%'>";
     echo "<tr>";
     if(isset($_GET['insert'])){
         if(!empty($_GET["col2"])){
@@ -36,15 +36,20 @@
 		$sql = "SELECT * FROM country;";
         $result = mysqli_query($conn, $sql);
 
-			while($row = mysqli_fetch_assoc($result)){
-                echo "<tr>";
-                foreach($_GET["col2"] as $col2){
-                    echo "<td><p> <font color=white>".$row["$col2"]."</td>";
-                }
-                echo "<td><input type = 'submit' value = 'UPDATE' id='update_btn' class= 'update'> <input type = 'submit' value = 'DELETE' id='delete_btn' class= 'delete'></td>";
-                echo "</tr>";
+        while($row = mysqli_fetch_assoc($result)){
+            echo "<tr>";
+            foreach($_GET["col2"] as $col2){
+                echo "<td><p> <font color=white>".$row["$col2"]."</td>";
             }
+            echo '<td align="center"><form action="delete2.php" method="get">';
+                foreach($_GET["col2"] as $col2){
+                    echo "<input type='hidden' value='$col2' name='col2[]'>";
+                }
+            echo'<input type="hidden" name="primKey" value='.$row["Country_abb"].'> <input type="submit" name="delete" value="DELETE" id="delete_btn" class= "delete">';
+            echo'<input type="submit" name="update" value="UPDATE" id="update_btn" class= "update"></form></td>'; 
+            echo "</tr>";
         }
+    }
         else{
             echo "<p> <font color=white>Please select at least one column";
         }
