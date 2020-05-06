@@ -20,7 +20,7 @@
             }
             echo "<input type = 'submit' name = 'insert' value = 'submit' id='submit1_btn' class='submit1'>";
         }
-
+        echo "<br>";
         echo "</form>";
         echo "<br>";
     echo "<table border='1' cellpadding='2' bordercolor='#c23616' width = '100%'>";
@@ -41,8 +41,12 @@
                 foreach($_GET["col"] as $col){
                     echo "<td><p> <font color=white>".$row["$col"]."</td>";
                 }
-                //echo "<td><input type = 'submit' value = 'UPDATE'> <input type = 'submit' value = 'DELETE'></td>";
-                echo '<td align="center"><form action="delete1.php" method="get"> <input type="hidden" name="primKey" value='.$row["ID"].'> <input type="submit" name="delete" value="DELETE" id="delete_btn" class= "delete"> <input type="submit" name="update" value="UPDATE" id="update_btn" class= "update"></form></td>';
+                echo '<td align="center" ><form action="delete1.php" method="get">';
+                    foreach($_GET["col"] as $col){
+                        echo "<input type='hidden' value='$col' name='col[]'>";
+                    }
+                echo'<input type="hidden" name="primKey" value='.$row["ID"].'> <input type="submit" name="delete" value="DELETE" id="delete_btn" class= "delete">';
+                echo'<input type="submit" name="update" value="UPDATE" id="update_btn" class= "update"></form></td>'; 
                 echo "</tr>";
             }
         }
@@ -54,7 +58,7 @@
     }
 
     else { //if we pressed select
-    echo "<b><ul><u>city</b></ul></u>";
+    echo "<b><ul><u><p> <font color=white>CITY</b></ul></u>";
     echo "<br>";
     echo "<table border='1' cellpadding='2' bordercolor='#c23616' width = '100%'>";
     echo "<tr>";

@@ -4,7 +4,6 @@
 
     if ($_GET['submit']=='INSERT'){ //if we pressed insert
         echo "<p> <font color=white>Enter information:";
-        //echo "<i>For inserting a text, please enclosed text with quotation(' ')</i>";
         echo "<br>";
         echo "<br>";
         echo "<form action = 'insert2.php' method = 'get'>";
@@ -16,7 +15,7 @@
             }
             echo "<input type = 'submit' name = 'insert' value = 'submit' id='submit1_btn' class='submit1'>";
         }
-
+        echo "<br>";
         echo "</form>";
         echo "<br>";
     echo "<table border='1' cellpadding='2' bordercolor='#f0932b' width = '100%'>";
@@ -35,10 +34,14 @@
 			while($row = mysqli_fetch_assoc($result)){
                 echo "<tr>";
                 foreach($_GET["col2"] as $col2){
-                    echo "<td>".$row["$col2"]."</td>";
+                    echo "<td><p> <font color=white>".$row["$col2"]."</td>";
                 }
-                //echo "<td><input type = 'submit' value = 'UPDATE'> <input type = 'submit' value = 'DELETE'></td>";
-                echo '<td align="center"><form action="delete2.php" method="get"> <input type="hidden" name="primKey" value='.$row["Country_abb"].'> <input type="submit" name="delete" value="DELETE" id="delete_btn" class= "delete"> <input type="submit" name="update" value="UPDATE" id="update_btn" class= "update"></form></td>';
+                echo '<td align="center"><form action="delete2.php" method="get">';
+                    foreach($_GET["col2"] as $col2){
+                        echo "<p> <font color=white><input type='hidden' value='$col2' name='col2[]'>";
+                    }
+                echo'<input type="hidden" name="primKey" value='.$row["Country_abb"].'> <input type="submit" name="delete" value="DELETE" id="delete_btn" class= "delete">';
+                echo'<input type="submit" name="update" value="UPDATE" id="update_btn" class= "update"></form></td>'; 
                 echo "</tr>";
             }
         }
@@ -50,7 +53,7 @@
     }
 
     else{ //if we pressed select
-    echo "<b><ul><u>country</b></ul></u>";
+    echo "<b><ul><u><p><font color=white>COUNTRY</b></ul></u>";
     echo "<br>";
     echo "<table border='1' cellpadding='2' bordercolor='#f0932b' width = '100%'>";
     echo "<tr>";
